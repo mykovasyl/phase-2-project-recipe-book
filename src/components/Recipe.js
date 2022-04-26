@@ -1,19 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Recipe(/*{ name, readyInMinutes, image, summary, ingredients, instructions, spoonacularSourceUrl }*/) {
+function Recipe({ recipe, onRecipeLike }) {
+  const {
+    title,
+    readyIn,
+    image,
+    summary,
+    ingredients,
+    instructions,
+    sourceUrl,
+  } = recipe;
+  const [liked, setLiked] = useState(false);
+  const mappedIngredients = ingredients.map((ingredient) => (
+    <li key={ingredient.name}>
+      {ingredient.name}: {ingredient.amount} {ingredient.unit}
+    </li>
+  ));
 
-  //const ingredients =  extendedIngredients.map(ingredient => <li>{ingredient.name}: {ingredient.amount}{ingredient.unit}</li>}
+  function handleClick() {
+    setLiked(!liked);
+    onRecipeLike(!liked);
+  }
+
   return (
     <div>
-      <h1>{"Name"}</h1><h3>in {"readyInMinutes"} minutes</h3>
-      <img src='image' alt="image of food"></img>
+      <h1>{title}</h1>
+      <button type="button" onClick={handleClick}>
+        {liked ? "Delete it!" : "Like it!"}
+      </button>
+      <h3>Ready in {readyIn} minutes</h3>
+      <img src={image} alt="image of food"></img>
       <h3>Summary:</h3>
-      <p>{'summary'}</p>
+      <div dangerouslySetInnerHTML={{ __html: summary }} />
       <h3>Ingredients:</h3>
-      <ul>{'ingredients'}</ul>
+      <ul>{mappedIngredients}</ul>
       <h3>Instructions:</h3>
-      <p>{'instructions'}</p>
-      <p>For more information visit: <a href="spoonacularSourceUrl">Spoonacular</a></p>
+      <div dangerouslySetInnerHTML={{ __html: instructions }} />
+      <p>
+        For more information visit: <a href={sourceUrl}>Spoonacular</a>
+      </p>
     </div>
   );
 }
