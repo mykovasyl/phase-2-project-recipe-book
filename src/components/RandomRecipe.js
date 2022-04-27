@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Recipe from "./Recipe";
 
-function RandomRecipe({ setRandomRecipe, recipe }) {
+function RandomRecipe({
+  setRandomRecipe,
+  recipe,
+  onRecipeLike,
+  onRecipeDislike,
+}) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const {
-    title,
-    readyInMinutes,
-    image,
-    summary,
-    extendedIngredients,
-    instructions,
-    spoonacularSourceUrl,
-  } = recipe;
 
   function handleClick() {
     fetch(
@@ -20,15 +16,16 @@ function RandomRecipe({ setRandomRecipe, recipe }) {
       .then((resp) => resp.json())
       .then((data) => {
         setRandomRecipe({
-          title: data.title,
-          readyIn: data.readyInMinutes,
-          image: data.image,
-          summary: data.summary,
-          instructions: data.instructions,
-          ingredients: data.extendedIngredients,
-          sourceUrl: data.spoonacularSourceUrl,
+          title: data.recipes[0].title,
+          readyIn: data.recipes[0].readyInMinutes,
+          image: data.recipes[0].image,
+          summary: data.recipes[0].summary,
+          instructions: data.recipes[0].instructions,
+          ingredients: data.recipes[0].extendedIngredients,
+          sourceUrl: data.recipes[0].spoonacularSourceUrl,
+          liked: false,
         });
-        setIsLoaded(!isLoaded);
+        setIsLoaded(true);
       });
   }
 
@@ -39,13 +36,9 @@ function RandomRecipe({ setRandomRecipe, recipe }) {
       </button>
       {isLoaded ? (
         <Recipe
-          title={title}
-          readyInMinutes={readyInMinutes}
-          image={image}
-          summary={summary}
-          extendedIngredients={extendedIngredients}
-          instructions={instructions}
-          spoonacularSourceUrl={spoonacularSourceUrl}
+          recipe={recipe}
+          onRecipeLike={onRecipeLike}
+          onRecipeDislike={onRecipeDislike}
         />
       ) : null}
     </div>
