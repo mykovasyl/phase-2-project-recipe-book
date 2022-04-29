@@ -61,7 +61,11 @@ function App() {
           />
         </Route>
         <Route path="/recipeform">
-          <RecipeForm />
+          <RecipeForm
+            recipe={recipe}
+            onFormChange={setRecipe}
+            onFormSubmit={handleAddRecipe}
+          />
         </Route>
         <Route path="/recipebook">
           <RecipeBook onRecipeDislike={handleDeleteRecipe} recipes={recipes} />
