@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import Recipe from "./Recipe";
 
-function RandomRecipe({ setRandomRecipe, recipe, onRecipeLike }) {
+function RandomRecipe({ onRecipeLike }) {
+  const [recipe, setRecipe] = useState({
+    title: "",
+    readyIn: "",
+    image: "",
+    summary: "",
+    instructions: "",
+    ingredients: [],
+    sourceUrl: "",
+    liked: false,
+  });
   const [isLoaded, setIsLoaded] = useState(false);
 
   function handleClick() {
@@ -10,7 +20,7 @@ function RandomRecipe({ setRandomRecipe, recipe, onRecipeLike }) {
     )
       .then((resp) => resp.json())
       .then((data) => {
-        setRandomRecipe({
+        setRecipe({
           title: data.recipes[0].title,
           readyIn: data.recipes[0].readyInMinutes,
           image: data.recipes[0].image,
@@ -18,6 +28,7 @@ function RandomRecipe({ setRandomRecipe, recipe, onRecipeLike }) {
           instructions: data.recipes[0].instructions,
           ingredients: data.recipes[0].extendedIngredients,
           sourceUrl: data.recipes[0].spoonacularSourceUrl,
+          liked: false,
         });
         setIsLoaded(true);
       });

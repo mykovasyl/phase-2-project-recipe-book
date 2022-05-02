@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import RandomRecipe from "./RandomRecipe";
 import RecipeForm from "./RecipeForm";
 import RecipeBook from "./RecipeBook";
@@ -7,47 +7,48 @@ import Home from "./Home";
 import { Switch, Route } from "react-router-dom";
 
 function App() {
-  const [recipe, setRecipe] = useState({
-    title: "",
-    readyIn: "",
-    image: "",
-    summary: "",
-    instructions: "",
-    ingredients: [],
-    sourceUrl: "",
-  });
+  const [recipes, setRecipes] = useState([]);
 
-  function addRandomRecipe(liked) {
-    console.log(liked);
-    if (liked === true) {
-      fetch("http://localhost:3001/recipes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(recipe),
-      })
-        .then((resp) => resp.json())
-        .then((data) => console.log(data));
-    }
+  function handleAddRecipe(recipe) {
+    fetch("http://localhost:3001/recipes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...recipe, liked: true }),
+    })
+      .then((resp) => resp.json())
+      .then((postedRecipe) => setRecipes([...recipes, postedRecipe]));
   }
+
+  function handleDeleteRecipe(id) {
+    const newRecipes = recipes.filter((recipe) => recipe.id !== id);
+    fetch(`http://localhost:3001/recipes/${id}`, {
+      method: "DELETE",
+    });
+    setRecipes(newRecipes);
+  }
+
+  useEffect(() => {
+    fetch("http://localhost:3001/recipes")
+      .then((resp) => resp.json())
+      .then((jsonRecipes) => {
+        setRecipes(jsonRecipes);
+      });
+  }, []);
 
   return (
     <div>
       <NavBar />
       <Switch>
         <Route path="/randomrecipe">
-          <RandomRecipe
-            setRandomRecipe={setRecipe}
-            recipe={recipe}
-            onRecipeLike={addRandomRecipe}
-          />
-        </Route>
-        <Route path="/recipelist">
-          <RecipeBook />
+          <RandomRecipe onRecipeLike={handleAddRecipe} />
         </Route>
         <Route path="/recipeform">
-          <RecipeForm />
+          <RecipeForm onFormSubmit={handleAddRecipe} />
+        </Route>
+        <Route path="/recipebook">
+          <RecipeBook onRecipeDislike={handleDeleteRecipe} recipes={recipes} />
         </Route>
         <Route exact path="/">
           <Home />

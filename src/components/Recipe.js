@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Recipe({ recipe, onRecipeLike }) {
+function Recipe({ recipe, onRecipeLike, onRecipeDislike }) {
   const {
     title,
     readyIn,
@@ -9,25 +9,39 @@ function Recipe({ recipe, onRecipeLike }) {
     ingredients,
     instructions,
     sourceUrl,
+    liked,
+    id = null,
   } = recipe;
-  const [liked, setLiked] = useState(false);
   const mappedIngredients = ingredients.map((ingredient) => (
     <li key={ingredient.name}>
       {ingredient.name}: {ingredient.amount} {ingredient.unit}
     </li>
   ));
+  const [likedRecipe, setLikedRecipe] = useState(liked);
 
   function handleClick() {
-    setLiked(!liked);
-    onRecipeLike(!liked);
+    setLikedRecipe(!liked);
+    if (!liked) {
+      onRecipeLike(recipe);
+    } else if (liked) {
+      onRecipeDislike(id);
+    }
   }
 
   return (
     <div>
       <h1>{title}</h1>
-      <button type="button" onClick={handleClick}>
-        {liked ? "Delete it!" : "Like it!"}
-      </button>
+      {likedRecipe ? (
+        id ? (
+          <button type="button" onClick={handleClick}>
+            Delete it!
+          </button>
+        ) : null
+      ) : (
+        <button type="button" onClick={handleClick}>
+          Like it!
+        </button>
+      )}
       <h3>Ready in {readyIn} minutes</h3>
       <img src={image} alt="image of food"></img>
       <h3>Summary:</h3>
