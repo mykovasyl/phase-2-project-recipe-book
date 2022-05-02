@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import Recipe from "./Recipe";
 
-function RandomRecipe({
-  setRandomRecipe,
-  recipe,
-  onRecipeLike,
-  onRecipeDislike,
-}) {
+function RandomRecipe({ onRecipeLike }) {
+  const [recipe, setRecipe] = useState({
+    title: "",
+    readyIn: "",
+    image: "",
+    summary: "",
+    instructions: "",
+    ingredients: [],
+    sourceUrl: "",
+    liked: false,
+  });
   const [isLoaded, setIsLoaded] = useState(false);
 
   function handleClick() {
@@ -15,7 +20,7 @@ function RandomRecipe({
     )
       .then((resp) => resp.json())
       .then((data) => {
-        setRandomRecipe({
+        setRecipe({
           title: data.recipes[0].title,
           readyIn: data.recipes[0].readyInMinutes,
           image: data.recipes[0].image,
@@ -34,13 +39,7 @@ function RandomRecipe({
       <button type="button" onClick={handleClick}>
         Get Random Recipe
       </button>
-      {isLoaded ? (
-        <Recipe
-          recipe={recipe}
-          onRecipeLike={onRecipeLike}
-          onRecipeDislike={onRecipeDislike}
-        />
-      ) : null}
+      {isLoaded ? <Recipe recipe={recipe} onRecipeLike={onRecipeLike} /> : null}
     </div>
   );
 }

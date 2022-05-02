@@ -22,7 +22,7 @@ function Recipe({ recipe, onRecipeLike, onRecipeDislike }) {
   function handleClick() {
     setLikedRecipe(!liked);
     if (!liked) {
-      onRecipeLike(!liked);
+      onRecipeLike(recipe);
     } else if (liked) {
       onRecipeDislike(id);
     }

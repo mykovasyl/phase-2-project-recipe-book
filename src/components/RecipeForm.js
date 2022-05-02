@@ -1,77 +1,114 @@
 import React, { useState } from "react";
 
-function RecipeForm({ onFormChange, recipe, onFormSubmit }) {
-  const [count, setCount] = useState(1);
-  const [ingredientInputs, setIngredientInputs] = useState([
-    <>
-      <input type="text" className="ingredient" onChange={handleChange}>
-        Ingredient
-      </input>
-      <br></br>
-      <input type="text" className="amount" onChange={handleChange}>
-        Amount
-      </input>
-      <br></br>
-      <input type="text" className="unit" onChange={handleChange}>
-        Unit
-      </input>
-      <br></br>
-    </>,
+function RecipeForm({ onFormChange, onFormSubmit }) {
+  const [newRecipe, setNewRecipe] = useState({
+    title: "",
+    readyIn: "",
+    image: "",
+    summary: "",
+    instructions: "",
+    ingredients: [],
+    sourceUrl: "",
+    liked: false,
+  });
+
+  const [ingredientsList, setIngredientsList] = useState([
+    { name: "", amount: "", unit: "" },
   ]);
-  // const newIngredientsArray = ingredientInputs.map((input) => (
-  //   <>
-  //     <input
-  //       key={count + 1}
-  //       type="text"
-  //       id="ingredient"
-  //       onChange={handleChange}
-  //     ></input>
-  //     <input
-  //       key={count + 100}
-  //       type="text"
-  //       className="amount"
-  //       onChange={handleChange}
-  //     ></input>
-  //     <input
-  //       key={count + 1000}
-  //       type="text"
-  //       className="unit"
-  //       onChange={handleChange}
-  //     ></input>
-  //   </>
-  // ));
 
   function handleChange(e) {
-    onFormChange({ ...recipe, [e.target.name]: e.target.value });
+    setNewRecipe({ ...newRecipe, [e.target.name]: e.target.value });
   }
 
   function handleIngredientAdd() {
-    setCount(count + 1);
-    setIngredientInputs(newIngredientsArray);
+    setIngredientsList([
+      ...ingredientsList,
+      { name: "", amount: "", unit: "" },
+    ]);
+  }
+
+  function handleOnChange(index, e) {
+    const updatedIngredients = ingredientsList.map((ing, i) => {
+      if (index === i) {
+        return {
+          ...ing,
+          [e.target.name]: e.target.value,
+        };
+      } else {
+        return ing;
+      }
+    });
+
+    setIngredientsList(updatedIngredients);
+  }
+
+  const ingredients = ingredientsList.map((ingredient, index) => (
+    <div key={index}>
+      <input
+        name="name"
+        placeholder="name"
+        value={ingredient.name}
+        onChange={(event) => handleOnChange(index, event)}
+      />
+      <input
+        name="amount"
+        placeholder="amount"
+        value={ingredient.amount}
+        onChange={(event) => handleOnChange(index, event)}
+      />
+      <input
+        name="unit"
+        placeholder="unit"
+        value={ingredient.unit}
+        onChange={(event) => handleOnChange(index, event)}
+      />
+    </div>
+  ));
+
+  function handleSubmit(e) {
+    e.preventDefault();
   }
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>Recipe Name:</label>
-        <input type="text" id="title" onChange={handleChange}></input>
+        <input type="text" name="title" onChange={handleChange}></input>
         <br></br>
         <label>Summary:</label>
-        <input type="text" id="summary" onChange={handleChange}></input>
+        <br></br>
+        <textarea
+          name="summary"
+          rows="5"
+          cols="50"
+          onChange={handleChange}
+        ></textarea>
         <br></br>
         <label>Image:</label>
-        <input type="text" id="image" onChange={handleChange}></input>
+        <input type="text" name="image" onChange={handleChange}></input>
         <br></br>
+
         <label>Ingredients:</label>
-        {ingredientInputs}
+        <br></br>
+        {ingredients}
         <button type="button" onClick={handleIngredientAdd}>
-          <br></br>
           Add more ingredients
         </button>
         <br></br>
+
         <label>Instructions:</label>
-        <input type="text" id="instructions" onChange={handleChange}></input>
         <br></br>
+        <textarea
+          name="instructions"
+          rows="5"
+          cols="50"
+          onChange={handleChange}
+        ></textarea>
+        <br></br>
+        <label>Optional source link:</label>
+        <input type="text" name="sourceUrl" onChange={handleChange}></input>
+        <br></br>
+        <button type="submit">Add Recipe To Book</button>
       </form>
     </div>
   );

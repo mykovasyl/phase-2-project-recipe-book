@@ -7,20 +7,9 @@ import Home from "./Home";
 import { Switch, Route } from "react-router-dom";
 
 function App() {
-  const [recipe, setRecipe] = useState({
-    title: "",
-    readyIn: "",
-    image: "",
-    summary: "",
-    instructions: "",
-    ingredients: [],
-    sourceUrl: "",
-    liked: false,
-  });
   const [recipes, setRecipes] = useState([]);
 
-  function handleAddRecipe(like) {
-    setRecipe({ ...recipe, liked: like });
+  function handleAddRecipe(recipe) {
     fetch("http://localhost:3001/recipes", {
       method: "POST",
       headers: {
@@ -53,19 +42,10 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/randomrecipe">
-          <RandomRecipe
-            setRandomRecipe={setRecipe}
-            recipe={recipe}
-            onRecipeLike={handleAddRecipe}
-            onRecipeDislike={handleDeleteRecipe}
-          />
+          <RandomRecipe onRecipeLike={handleAddRecipe} />
         </Route>
         <Route path="/recipeform">
-          <RecipeForm
-            recipe={recipe}
-            onFormChange={setRecipe}
-            onFormSubmit={handleAddRecipe}
-          />
+          <RecipeForm onFormSubmit={handleAddRecipe} />
         </Route>
         <Route path="/recipebook">
           <RecipeBook onRecipeDislike={handleDeleteRecipe} recipes={recipes} />
