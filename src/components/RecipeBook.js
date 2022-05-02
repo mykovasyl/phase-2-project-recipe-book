@@ -10,8 +10,13 @@ function RecipeBook({ recipes, onRecipeDislike }) {
       onRecipeDislike={onRecipeDislike}
     />
   ));
-
-  return <div>{recipesDisplayed}</div>;
+  return (
+    <div>
+      {recipesDisplayed.length === 0
+        ? "Recipe Book is currently empty. Go to Random Recipe or Add Recipe to add recipes to the Recipe Book."
+        : recipesDisplayed}
+    </div>
+  );
 }
 
 export default RecipeBook;
