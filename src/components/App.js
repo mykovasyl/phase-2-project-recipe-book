@@ -10,7 +10,7 @@ function App() {
   const [recipes, setRecipes] = useState([]);
 
   function handleAddRecipe(recipe) {
-    fetch("http://localhost:3001/recipes", {
+    fetch(`${process.env.REACT_APP_API_URL}/recipes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,14 +23,14 @@ function App() {
 
   function handleDeleteRecipe(id) {
     const newRecipes = recipes.filter((recipe) => recipe.id !== id);
-    fetch(`http://localhost:3001/recipes/${id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/recipes/${id}`, {
       method: "DELETE",
     });
     setRecipes(newRecipes);
   }
 
   useEffect(() => {
-    fetch("http://localhost:3001/recipes")
+    fetch(`${process.env.REACT_APP_API_URL}/recipes`)
       .then((resp) => resp.json())
       .then((jsonRecipes) => {
         setRecipes(jsonRecipes);

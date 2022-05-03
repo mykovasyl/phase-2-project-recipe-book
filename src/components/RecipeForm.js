@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function RecipeForm({ onFormChange, onFormSubmit }) {
+function RecipeForm({ onFormSubmit }) {
   const [newRecipe, setNewRecipe] = useState({
     title: "",
     readyIn: "",
@@ -38,7 +38,6 @@ function RecipeForm({ onFormChange, onFormSubmit }) {
         return ing;
       }
     });
-
     setIngredientsList(updatedIngredients);
   }
 
@@ -67,25 +66,63 @@ function RecipeForm({ onFormChange, onFormSubmit }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const recipeWithIngredients = {
+      ...newRecipe,
+      ingredients: ingredientsList,
+    };
+    onFormSubmit(recipeWithIngredients);
+    setIngredientsList([{ name: "", amount: "", unit: "" }]);
+    setNewRecipe({
+      title: "",
+      readyIn: "",
+      image: "",
+      summary: "",
+      instructions: "",
+      ingredients: [],
+      sourceUrl: "",
+      liked: false,
+    });
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <label>Recipe Name:</label>
-        <input type="text" name="title" onChange={handleChange}></input>
+        <input
+          type="text"
+          name="title"
+          value={newRecipe.title}
+          onChange={handleChange}
+        ></input>
         <br></br>
+
+        <label>Ready in:</label>
+        <input
+          type="text"
+          name="readyIn"
+          value={newRecipe.readyIn}
+          onChange={handleChange}
+        ></input>
+        <br></br>
+
         <label>Summary:</label>
         <br></br>
         <textarea
           name="summary"
           rows="5"
           cols="50"
+          value={newRecipe.summary}
           onChange={handleChange}
         ></textarea>
         <br></br>
+
         <label>Image:</label>
-        <input type="text" name="image" onChange={handleChange}></input>
+        <input
+          type="text"
+          name="image"
+          value={newRecipe.image}
+          onChange={handleChange}
+        ></input>
         <br></br>
 
         <label>Ingredients:</label>
@@ -102,12 +139,20 @@ function RecipeForm({ onFormChange, onFormSubmit }) {
           name="instructions"
           rows="5"
           cols="50"
+          value={newRecipe.instructions}
           onChange={handleChange}
         ></textarea>
         <br></br>
+
         <label>Optional source link:</label>
-        <input type="text" name="sourceUrl" onChange={handleChange}></input>
+        <input
+          type="text"
+          name="sourceUrl"
+          value={newRecipe.sourceUrl}
+          onChange={handleChange}
+        ></input>
         <br></br>
+
         <button type="submit">Add Recipe To Book</button>
       </form>
     </div>
