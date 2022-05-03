@@ -46,19 +46,19 @@ function RecipeForm({ onFormChange, onFormSubmit }) {
     <div key={index}>
       <input
         name="name"
-        placeholder="name"
+        placeholder="Name..."
         value={ingredient.name}
         onChange={(event) => handleOnChange(index, event)}
       />
       <input
         name="amount"
-        placeholder="amount"
+        placeholder="Amount..."
         value={ingredient.amount}
         onChange={(event) => handleOnChange(index, event)}
       />
       <input
         name="unit"
-        placeholder="unit"
+        placeholder="Unit..."
         value={ingredient.unit}
         onChange={(event) => handleOnChange(index, event)}
       />
