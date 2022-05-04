@@ -8,6 +8,7 @@ import { Switch, Route } from "react-router-dom";
 
 function App() {
   const [recipes, setRecipes] = useState([]);
+  const [isLiked, setIsLiked] = useState(false);
 
   function handleAddRecipe(recipe) {
     fetch(`${process.env.REACT_APP_API_URL}/recipes`, {
@@ -42,13 +43,22 @@ function App() {
       <NavBar />
       <Switch>
         <Route path="/randomrecipe">
-          <RandomRecipe onRecipeLike={handleAddRecipe} />
+          <RandomRecipe
+            onRecipeLike={handleAddRecipe}
+            isLiked={isLiked}
+            setIsLiked={setIsLiked}
+          />
         </Route>
         <Route path="/recipeform">
           <RecipeForm onFormSubmit={handleAddRecipe} />
         </Route>
         <Route path="/recipebook">
-          <RecipeBook onRecipeDislike={handleDeleteRecipe} recipes={recipes} />
+          <RecipeBook
+            onRecipeDislike={handleDeleteRecipe}
+            recipes={recipes}
+            isLiked={isLiked}
+            setIsLiked={setIsLiked}
+          />
         </Route>
         <Route exact path="/">
           <Home />

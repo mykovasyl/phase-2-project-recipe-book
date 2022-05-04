@@ -2,14 +2,18 @@
 import React from "react";
 import Recipe from "./Recipe";
 
-function RecipeBook({ recipes, onRecipeDislike }) {
+function RecipeBook({ recipes, onRecipeDislike, isLiked, setIsLiked }) {
   const recipesDisplayed = recipes.map((recipe) => (
     <Recipe
       key={recipe.summary}
       recipe={recipe}
       onRecipeDislike={onRecipeDislike}
+      isLiked={isLiked}
     />
   ));
+
+  setIsLiked(true);
+
   return (
     <div>
       {recipesDisplayed.length === 0
