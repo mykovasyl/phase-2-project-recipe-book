@@ -103,6 +103,7 @@ function RecipeForm({ onFormSubmit }) {
           value={newRecipe.readyIn}
           onChange={handleChange}
         ></input>
+        <label>minutes</label>
         <br></br>
 
         <label>Summary:</label>
