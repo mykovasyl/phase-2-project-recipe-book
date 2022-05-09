@@ -1,11 +1,11 @@
 import React from "react";
 
-function Recipe({
+function BookRecipe({
   recipe,
   onRecipeLike,
   onRecipeDislike,
-  isLiked,
-  setIsLiked,
+  setLikedRecipe,
+  likedRecipe,
 }) {
   const {
     title,
@@ -25,32 +25,58 @@ function Recipe({
   ));
 
   function handleClick() {
+    setLikedRecipe(!liked);
     if (!liked) {
-      setIsLiked(true);
       onRecipeLike(recipe);
     } else if (liked) {
       onRecipeDislike(id);
     }
   }
 
+  let likeDeleteButton = liked ? (
+    <button type="button" onClick={handleClick}>
+      Delete it!
+    </button>
+  ) : (
+    <button type="button" onClick={handleClick}>
+      Like it!
+    </button>
+  );
+
+  // if (isRecipeBook || likedRecipe) {
+  //   likeDeleteButton = (
+  //     <button type="button" onClick={handleClick}>
+  //       Delete it!
+  //     </button>
+  //   );
+  // } else {
+  //   likeDeleteButton = (
+  //     <button type="button" onClick={handleClick}>
+  //       Like it!
+  //     </button>
+  //   );
+  // }
+
   return (
     <div>
       <h1>{title}</h1>
-      {/* {likeDeleteButton} */}
-      {isLiked ? (
+      {likeDeleteButton}
+      {/* {likedRecipe ? (
         id ? (
           <button type="button" onClick={handleClick}>
             Delete it!
           </button>
         ) : null
       ) : (
-        <button type="button" onClick={handleClick}>
-          Like it!
-        </button>
-      )}
+        !isRecipeBook && (
+          <button type="button" onClick={handleClick}>
+            Like it!
+          </button>
+        )
+      )} */}
 
       <h3>Ready in {readyIn} minutes</h3>
-      <img src={image} alt="food"></img>
+      <img src={image} alt="image of food"></img>
       <h3>Summary:</h3>
       <div dangerouslySetInnerHTML={{ __html: summary }} />
       <h3>Ingredients:</h3>
@@ -64,4 +90,4 @@ function Recipe({
   );
 }
 
-export default Recipe;
+export default BookRecipe;
