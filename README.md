@@ -5,6 +5,8 @@ This is the phase 2 project of the Flatiron Software Engineering Flex course.
 ## About the app
 
 I created this app so my wife and I could explore new recipes to try at home.
+The front end is hosted on Netlify (https://roaring-fox-140188.netlify.app/)
+The back end is hosted on Heroku.
 
 ## Features
 
