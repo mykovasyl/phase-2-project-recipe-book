@@ -1,3 +1,37 @@
+# Recipe Book
+
+This is the phase 2 project of the Flatiron Software Engineering Flex course.
+
+## About the app
+
+I created this app so my wife and I could explore new recipes to try at home.
+The front end is hosted on Netlify (https://roaring-fox-140188.netlify.app/)
+The back end is hosted on Heroku.
+
+## Features
+
+This app has 3 main pages: Random Recipe, Recipe Book, and Add Recipe. 
+
+### Random Recipe
+
+Random Recipe will display a randomly pulled recipe from the Spoonacular public API (https://spoonacular.com/food-api). You can like the recipe using the Like it! button which will add the recipe to the Recipe Book. 
+
+#### Rate and Quota Limits
+
+New random recipes can be fetched per the quota limit of 60 per minute on the Free account. Requests for new random recipes cost 1 point and 0.01 points for each recipe with a maximum 150 points per day. For more information, visit Spoonacular (https://spoonacular.com/food-api/docs#Quotas).
+
+### Recipe Book
+
+This is the place where you will find all of your liked and added recipes. You can delete recipes at any time with the Delete It! button. This action is final and the recipe cannot be restored. There's a chance the same recipe could come up again on the Random Recipe page or it can be manual added on the Add Recipe page.
+
+### Add Recipe
+
+On this page you're able to enter in your own recipes to store in the Recipe Book. All fields are optional. 
+
+#
+
+Below is information regarding running the application.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -45,26 +79,3 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
