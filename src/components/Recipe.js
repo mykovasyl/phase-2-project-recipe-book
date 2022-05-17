@@ -26,6 +26,7 @@ function Recipe({
 
   function handleClick() {
     if (!liked) {
+      recipe.liked = true;
       setIsLiked(true);
       onRecipeLike(recipe);
     } else if (liked) {
@@ -36,8 +37,7 @@ function Recipe({
   return (
     <div>
       <h1>{title}</h1>
-      {/* {likeDeleteButton} */}
-      {isLiked ? (
+      {liked ? (
         id ? (
           <button type="button" onClick={handleClick}>
             Delete it!
